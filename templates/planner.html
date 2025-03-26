@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI LIFE & BUDGET PLANNER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --border-color: #e5e7eb;
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --input-border: #e5e7eb;
+            --input-text: #1f2937;
+            --section-bg: #f3f4f6;
+            --success-bg: #d1fae5;
+            --success-text: #059669;
+            --error-bg: #fee2e2;
+            --error-text: #dc2626;
+            --download-bg: #f8fafc;
+            --download-border: #e2e8f0;
+            --download-text: #1e293b;
+            --download-desc: #64748b;
+            --nav-bg: #ffffff;
+            --nav-text: #1f2937;
+            --nav-hover: #2563eb;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --text-color: #f3f4f6;
+            --light-bg: #1f2937;
+            --border-color: #374151;
+            --card-bg: #111827;
+            --input-bg: #1f2937;
+            --input-border: #374151;
+            --input-text: #f3f4f6;
+            --section-bg: #1f2937;
+            --success-bg: #064e3b;
+            --success-text: #34d399;
+            --error-bg: #7f1d1d;
+            --error-text: #fca5a5;
+            --download-bg: #1f2937;
+            --download-border: #374151;
+            --download-text: #f3f4f6;
+            --download-desc: #9ca3af;
+            --nav-bg: #1f2937;
+            --nav-text: #f3f4f6;
+            --nav-hover: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--light-bg);
+            min-height: 100vh;
+            padding: 2rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--nav-hover);
+        }
+
+        .nav-link svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .form-section {
+            background: var(--section-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-section h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--input-bg);
+            color: var(--input-text);
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-group input::placeholder,
+        .input-group select::placeholder,
+        .input-group textarea::placeholder {
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .checkbox-group {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: var(--input-bg);
+            border-radius: 0.5rem;
+            border: 1px solid var(--input-border);
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .checkbox-item label {
+            flex: 1;
+            margin: 0;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .amount-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .amount-input input {
+            width: 100px;
+            text-align: right;
+            padding-right: 0.75rem;
+        }
+
+        .activity-option {
+            background: var(--input-bg);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--input-border);
+            transition: all 0.3s ease;
+        }
+
+        .activity-option:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .activity-option h5 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        .activity-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+            min-width: 200px;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .submit-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .submit-btn.loading {
+            color: transparent;
+        }
+
+        .submit-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        .download-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--download-bg);
+            border-radius: 0.5rem;
+            border: 1px solid var(--download-border);
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-section.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .download-section h3 {
+            color: var(--download-text);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .download-section p {
+            color: var(--download-desc);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .download-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .download-btn:hover svg {
+            transform: translateY(2px);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .download-section.visible {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        .download-btn:hover svg {
+            animation: bounce 1s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .container {
+                margin-top: 4rem;
+                padding: 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .status-message {
+            color: var(--success-text);
+            background: var(--success-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .status-message.visible {
+            display: block;
+        }
+
+        .status-message.error {
+            color: var(--error-text);
+            background: var(--error-bg);
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover svg {
+            transform: rotate(180deg);
+        }
+
+        /* Modern Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 3.5rem;
+            height: 1.75rem;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--input-border);
+            transition: .4s;
+            border-radius: 1.75rem;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 1.25rem;
+            width: 1.25rem;
+            left: 0.25rem;
+            bottom: 0.25rem;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(1.75rem);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-links">
+            <a href="/" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Home
+            </a>
+            <a href="/planner" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Planner
+            </a>
+            <a href="https://www.bishopfx.org" target="_blank" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Contact
+            </a>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+        </button>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>AI LIFE & BUDGET PLANNER</h1>
+            <p>FILL OUT THE FORM BELOW TO CREATE YOUR PERSONALIZED LIFE AND BUDGET PLAN.</p>
+        </div>
+
+        <form id="plannerForm" class="form-grid">
+            <!-- Financial Information Section -->
+            <div class="form-section">
+                <h2>FINANCIAL INFORMATION</h2>
+                
+                <div class="input-group">
+                    <label for="currentBalance">STARTING BALANCE</label>
+                    <input type="number" id="currentBalance" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="incomeAmount">INCOME AMOUNT</label>
+                    <input type="number" id="incomeAmount" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="incomeFrequency">INCOME FREQUENCY</label>
+                    <select id="incomeFrequency" required>
+                        <option value="">SELECT FREQUENCY</option>
+                        <option value="biweekly">BIWEEKLY</option>
+                        <option value="monthly">MONTHLY</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>BILLS & EXPENSES</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="rent" name="expense">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="rent">RENT/MORTGAGE</label>
+                            <div class="amount-input">
+                                <input type="number" placeholder="AMOUNT" min="0">
+                            </div>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="utilities" name="expense">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="utilities">UTILITIES</label>
+                            <div class="amount-input">
+                                <input type="number" placeholder="AMOUNT" min="0">
+                            </div>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="carPayment" name="expense">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="carPayment">CAR PAYMENT</label>
+                            <div class="amount-input">
+                                <input type="number" placeholder="AMOUNT" min="0">
+                            </div>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="insurance" name="expense">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="insurance">INSURANCE</label>
+                            <div class="amount-input">
+                                <input type="number" placeholder="AMOUNT" min="0">
+                            </div>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="groceries" name="expense">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <input type="checkbox" id="groceries" name="expense">
+                            <label for="groceries">GROCERIES</label>
+                            <div class="amount-input">
+                                <input type="number" placeholder="AMOUNT" min="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="savingsGoal">MONTHLY SAVINGS GOAL</label>
+                    <input type="number" id="savingsGoal" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="emergencyFund">EMERGENCY FUND TARGET</label>
+                    <input type="number" id="emergencyFund" required>
+                </div>
+            </div>
+
+            <!-- Activity Goals Section -->
+            <div class="form-section">
+                <h2>ACTIVITY GOALS</h2>
+
+                <div class="input-group">
+                    <label for="workoutLocation">WORKOUT LOCATION</label>
+                    <select id="workoutLocation" required>
+                        <option value="">SELECT LOCATION</option>
+                        <option value="gym">GYM</option>
+                        <option value="home">HOME</option>
+                        <option value="both">BOTH</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="workoutExperience">FITNESS EXPERIENCE LEVEL</label>
+                    <select id="workoutExperience" required>
+                        <option value="">SELECT LEVEL</option>
+                        <option value="beginner">BEGINNER</option>
+                        <option value="intermediate">INTERMEDIATE</option>
+                        <option value="advanced">ADVANCED</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>AVAILABLE EQUIPMENT</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="dumbbells" name="equipment">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="dumbbells">DUMBBELLS</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="resistance_bands" name="equipment">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="resistance_bands">RESISTANCE BANDS</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="pull_up_bar" name="equipment">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="pull_up_bar">PULL-UP BAR</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="yoga_mat" name="equipment">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="yoga_mat">YOGA MAT</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-option">
+                    <h5>CARDIO</h5>
+                    <div class="activity-inputs">
+                        <select>
+                            <option value="">FREQUENCY</option>
+                            <option value="daily">DAILY</option>
+                            <option value="weekly">WEEKLY</option>
+                            <option value="biweekly">BIWEEKLY</option>
+                        </select>
+                        <input type="number" placeholder="DURATION (MIN)" min="0">
+                    </div>
+                </div>
+
+                <div class="activity-option">
+                    <h5>STRENGTH TRAINING</h5>
+                    <div class="activity-inputs">
+                        <select>
+                            <option value="">FREQUENCY</option>
+                            <option value="daily">DAILY</option>
+                            <option value="weekly">WEEKLY</option>
+                            <option value="biweekly">BIWEEKLY</option>
+                        </select>
+                        <input type="number" placeholder="DURATION (MIN)" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Schedule Section -->
+            <div class="form-section">
+                <h2>WORK SCHEDULE</h2>
+                
+                <div class="input-group">
+                    <label>WORK DAYS</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="monday" name="workDay" value="monday">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="monday">MONDAY</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="tuesday" name="workDay" value="tuesday">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="tuesday">TUESDAY</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="wednesday" name="workDay" value="wednesday">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="wednesday">WEDNESDAY</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="thursday" name="workDay" value="thursday">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="thursday">THURSDAY</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="friday" name="workDay" value="friday">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="friday">FRIDAY</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="saturday" name="workDay" value="saturday">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="saturday">SATURDAY</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="sunday" name="workDay" value="sunday">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <label for="sunday">SUNDAY</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="workStartTime">WORK START TIME</label>
+                    <input type="time" id="workStartTime" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="workEndTime">WORK END TIME</label>
+                    <input type="time" id="workEndTime" required>
+                </div>
+            </div>
+
+            <!-- Hobbies & Interests Section -->
+            <div class="form-section">
+                <h2>HOBBIES & INTERESTS</h2>
+                
+                <div class="input-group">
+                    <label for="hobbiesText">DESCRIBE YOUR HOBBIES AND INTERESTS</label>
+                    <textarea id="hobbiesText" rows="4" placeholder="TELL US ABOUT YOUR HOBBIES, INTERESTS, AND ANY SPECIFIC GOALS YOU'D LIKE TO ACHIEVE. FOR EXAMPLE: 'I ENJOY READING, PLAYING GUITAR, AND WANT TO LEARN PHOTOGRAPHY. I'D LIKE TO DEDICATE TIME TO THESE ACTIVITIES REGULARLY.'"></textarea>
+                </div>
+            </div>
+
+            <!-- Date Range Section -->
+            <div class="form-section">
+                <h2>DATE RANGE</h2>
+                
+                <div class="input-group">
+                    <label for="startDate">START DATE</label>
+                    <input type="date" id="startDate" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="endDate">END DATE</label>
+                    <input type="date" id="endDate" required>
+                </div>
+            </div>
+        </form>
+
+        <div class="submit-section">
+            <button type="submit" id="submitBtn" class="submit-btn">GENERATE PLAN</button>
+            <div id="errorMessage" class="error-message"></div>
+            <div id="statusMessage" class="status-message"></div>
+        </div>
+
+        <div id="downloadSection" class="download-section">
+            <h3>YOUR PLAN IS READY! 🎉</h3>
+            <p>YOUR PERSONALIZED CALENDAR FILE HAS BEEN GENERATED AND WILL DOWNLOAD AUTOMATICALLY. YOU CAN ALSO CLICK THE BUTTON BELOW TO DOWNLOAD IT MANUALLY.</p>
+            <button id="downloadButton" class="download-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                DOWNLOAD CALENDAR FILE
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('plannerForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const downloadSection = document.getElementById('downloadSection');
+            const errorMessage = document.getElementById('errorMessage');
+            const statusMessage = document.getElementById('statusMessage');
+            const downloadButton = document.getElementById('downloadButton');
+
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').min = today;
+            document.getElementById('endDate').min = today;
+
+            // Function to update status message
+            function updateStatus(message, isError = false) {
+                statusMessage.textContent = message;
+                statusMessage.classList.add('visible');
+                if (isError) {
+                    statusMessage.classList.add('error');
+                } else {
+                    statusMessage.classList.remove('error');
+                }
+                console.log(message);
+            }
+
+            // Function to show error message
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.add('visible');
+                updateStatus(message, true);
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+
+            // Function to handle file download
+            async function downloadFile() {
+                try {
+                    updateStatus('Preparing to download calendar file...');
+                    const response = await fetch('/static/calendar.ics');
+                    if (!response.ok) throw new Error('Failed to download file');
+                    
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'life_plan.ics';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    updateStatus('Calendar file downloaded successfully!');
+                } catch (error) {
+                    console.error('Download error:', error);
+                    showError('Failed to download the calendar file. Please try again.');
+                }
+            }
+
+            submitBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                errorMessage.classList.remove('visible');
+                statusMessage.classList.remove('visible');
+                submitBtn.disabled = true;
+                submitBtn.classList.add('loading');
+
+                console.log('Starting form submission...');
+
+                // Validate required fields
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('error');
+                    } else {
+                        field.classList.remove('error');
+                    }
+                });
+
+                // Validate work days
+                const workDays = Array.from(document.querySelectorAll('input[name="workDay"]:checked')).map(checkbox => checkbox.value);
+                if (workDays.length === 0) {
+                    showError('Please select at least one work day.');
+                    return;
+                }
+
+                if (!isValid) {
+                    showError('Please fill in all required fields.');
+                    return;
+                }
+
+                updateStatus('Collecting form data...');
+
+                // Collect form data
+                const formData = {
+                    start_date: document.getElementById('startDate').value,
+                    end_date: document.getElementById('endDate').value,
+                    budget_info: {
+                        starting_balance: parseFloat(document.getElementById('currentBalance').value),
+                        income: {
+                            amount: parseFloat(document.getElementById('incomeAmount').value),
+                            frequency: document.getElementById('incomeFrequency').value
+                        },
+                        savings_goal: parseFloat(document.getElementById('savingsGoal').value),
+                        emergency_fund: parseFloat(document.getElementById('emergencyFund').value),
+                        expenses: Array.from(document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked'))
+                            .map(checkbox => {
+                                const checkboxItem = checkbox.closest('.checkbox-item');
+                                const amountInput = checkboxItem.querySelector('.amount-input input');
+                                const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0;
+                                return {
+                                    name: checkboxItem.querySelector('label').textContent,
+                                    amount: amount
+                                };
+                            })
+                    },
+                    work_schedule: {
+                        days: workDays,
+                        start_time: document.getElementById('workStartTime').value,
+                        end_time: document.getElementById('workEndTime').value
+                    },
+                    activity_goals: {
+                        workout_preferences: {
+                            location: document.getElementById('workoutLocation').value,
+                            experience_level: document.getElementById('workoutExperience').value,
+                            available_equipment: Array.from(document.querySelectorAll('input[name="equipment"]:checked'))
+                                .map(item => item.id)
+                        },
+                        goals: Array.from(document.querySelectorAll('.activity-option')).map(option => {
+                            const frequency = option.querySelector('select').value;
+                            const duration = option.querySelector('input[type="number"]').value;
+                            if (frequency && duration) {
+                                return {
+                                    title: option.querySelector('h5').textContent,
+                                    frequency: frequency,
+                                    duration: parseInt(duration)
+                                };
+                            }
+                            return null;
+                        }).filter(Boolean)
+                    },
+                    hobbies_and_interests: document.getElementById('hobbiesText').value
+                };
+
+                console.log('Form data collected:', formData);
+                updateStatus('Sending data to server...');
+
+                try {
+                    const response = await fetch('/api/generate_plan', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    console.log('Server response status:', response.status);
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.error || `Network response was not ok: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('Server response data:', data);
+
+                    if (data.success) {
+                        updateStatus('Plan generated successfully! Preparing download...');
+                        downloadSection.classList.add('visible');
+                        submitBtn.style.display = 'none';
+                        // Trigger download after a short delay to ensure the file is ready
+                        setTimeout(downloadFile, 1000);
+                    } else {
+                        showError('Error generating plan: ' + (data.error || 'Unknown error'));
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showError(error.message || 'Error generating plan. Please try again.');
+                }
+            });
+
+            // Add click handler for manual download
+            downloadButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                downloadFile();
+            });
+
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // Set initial theme based on system preference or stored preference
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                document.documentElement.setAttribute('data-theme', storedTheme);
+            } else {
+                document.documentElement.setAttribute('data-theme', prefersDarkScheme.matches ? 'dark' : 'light');
+            }
+
+            // Update toggle button icon
+            function updateThemeIcon() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                themeToggle.innerHTML = isDark ? 
+                    '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>' :
+                    '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>';
+            }
+
+            // Toggle theme
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon();
+            });
+
+            // Update icon on initial load
+            updateThemeIcon();
+
+            // Listen for system theme changes
+            prefersDarkScheme.addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+                    updateThemeIcon();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
