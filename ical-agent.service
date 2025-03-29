@@ -1,0 +1,13 @@
+[Unit]
+Description=ICal Agent Web Application
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/ical-agent
+Environment="PATH=/var/www/ical-agent/venv/bin"
+ExecStart=/var/www/ical-agent/venv/bin/gunicorn -c gunicorn_config.py app:app
+
+[Install]
+WantedBy=multi-user.target 

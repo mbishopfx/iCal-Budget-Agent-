@@ -1,65 +1,48 @@
-# AI LIFE & BUDGET PLANNER
+# iCal Agent
 
-A modern web application that helps users create personalized life and budget plans using AI-powered insights. The application generates calendar files that integrate financial planning, fitness goals, and personal activities.
+An iOS app that helps you organize your life using AI-powered planning and calendar integration.
 
 ## Features
 
-- **Smart Budgeting**: AI-powered financial planning that adapts to your income and expenses
-- **Fitness Goals**: Personalized workout plans based on your experience and equipment
-- **Life Balance**: Intelligent scheduling that balances work, fitness, and personal time
-- **Dark Mode Support**: Seamless light/dark theme switching
-- **Responsive Design**: Works perfectly on all devices
-- **Calendar Integration**: Export your plan to your preferred calendar app
+- Beautiful onboarding experience with smooth animations
+- Smart planning interface for financial and activity goals
+- Brain dump feature for free-form input
+- Calendar integration for seamless scheduling
+- Modern SwiftUI interface
 
-## Tech Stack
+## Requirements
 
-- Python/Flask
-- HTML5/CSS3
-- JavaScript
-- Space Grotesk Font
-- iCal Format
+- iOS 15.0+
+- Xcode 13.0+
+- Swift 5.5+
 
-## Setup
+## Installation
 
-1. Clone the repository:
+1. Clone the repository
 ```bash
-git clone https://github.com/mbishopfx/iCal-Budget-Agent-.git
-cd iCal-Budget-Agent-
+git clone https://github.com/yourusername/ical-agent.git
 ```
 
-2. Create and activate a virtual environment:
+2. Open the project in Xcode
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+cd ical-agent
+open iCalAgent.xcodeproj
 ```
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
+3. Build and run the project
+
+## Development
+
+The project is structured as follows:
+
 ```
-
-4. Run the application:
-```bash
-python app.py
+iCalAgent/
+├── Models/         # Data models
+├── Views/          # SwiftUI views
+├── ViewModels/     # View models
+├── Utilities/      # Helper functions
+└── Resources/      # Assets and resources
 ```
-
-5. Open your browser and navigate to `http://localhost:5000`
-
-## Usage
-
-1. Visit the homepage and click "START PLANNING NOW"
-2. Fill out the form with your:
-   - Financial information
-   - Activity goals
-   - Work schedule
-   - Hobbies & interests
-   - Date range
-3. Click "GENERATE PLAN"
-4. Download your personalized calendar file
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
