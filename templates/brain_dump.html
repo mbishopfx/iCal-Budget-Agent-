@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI LIFE & BUDGET PLANNER</title>
+    <title>AI LIFE & BUDGET PLANNER - BRAIN DUMP</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -68,6 +68,7 @@
             color: var(--text-color);
             background: var(--light-bg);
             min-height: 100vh;
+            padding: 2rem;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -111,180 +112,182 @@
             height: 1.25rem;
         }
 
-        .hero {
-            padding: 8rem 2rem 4rem;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .header {
             text-align: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 2rem;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(255,255,255,0.05)"/></svg>');
-            opacity: 0.1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
             letter-spacing: 0.1em;
-            line-height: 1.2;
+            font-weight: 700;
         }
 
-        .hero p {
-            font-size: 1.25rem;
+        .header p {
+            color: #6b7280;
             max-width: 600px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
+            margin: 0 auto;
+            font-size: 1.1rem;
             letter-spacing: 0.05em;
         }
 
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: white;
+        .form-section {
+            background: var(--section-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-section h2 {
             color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--input-bg);
+            color: var(--input-text);
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-group input::placeholder,
+        .input-group select::placeholder,
+        .input-group textarea::placeholder {
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
             border: none;
             border-radius: 0.5rem;
             font-size: 1.125rem;
             font-weight: 600;
             letter-spacing: 0.1em;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+            position: relative;
+            min-width: 200px;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        .submit-btn:hover {
+            background: var(--secondary-color);
         }
 
-        .cta-button svg {
-            width: 1.25rem;
-            height: 1.25rem;
-            transition: transform 0.3s ease;
+        .submit-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
         }
 
-        .cta-button:hover svg {
-            transform: translateX(4px);
+        .submit-btn.loading {
+            color: transparent;
         }
 
-        .features {
-            padding: 4rem 2rem;
-            background: var(--section-bg);
-        }
-
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 1rem;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-        }
-
-        .feature-card h3 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-        }
-
-        .feature-card p {
-            color: var(--text-color);
-            opacity: 0.8;
-            letter-spacing: 0.05em;
-        }
-
-        .how-it-works {
-            padding: 4rem 2rem;
-            background: var(--card-bg);
-        }
-
-        .how-it-works h2 {
-            text-align: center;
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-        }
-
-        .steps {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .step {
-            text-align: center;
-            padding: 2rem;
-            background: var(--section-bg);
-            border-radius: 1rem;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .step:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-        }
-
-        .step-number {
-            width: 3rem;
-            height: 3rem;
-            background: var(--primary-color);
-            color: white;
+        .submit-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 2px solid white;
+            border-top-color: transparent;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 0 auto 1rem;
-            letter-spacing: 0.1em;
+            animation: spin 1s linear infinite;
         }
 
-        .step h3 {
-            color: var(--primary-color);
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
-        .step p {
-            color: var(--text-color);
-            opacity: 0.8;
-            letter-spacing: 0.05em;
+        .error-message {
+            color: var(--error-text);
+            background: var(--error-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        .status-message {
+            color: var(--success-text);
+            background: var(--success-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .status-message.visible {
+            display: block;
+        }
+
+        .status-message.error {
+            color: var(--error-text);
+            background: var(--error-bg);
         }
 
         .theme-toggle {
@@ -325,21 +328,9 @@
                 gap: 1rem;
             }
 
-            .hero {
-                padding: 6rem 1rem 3rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .features-grid,
-            .steps {
-                grid-template-columns: 1fr;
+            .container {
+                margin-top: 4rem;
+                padding: 1rem;
             }
         }
     </style>
@@ -347,19 +338,19 @@
 <body>
     <nav class="nav">
         <div class="nav-links">
-            <a href="{{ url_for('home') }}" class="nav-link">
+            <a href="/" class="nav-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 Home
             </a>
-            <a href="{{ url_for('planner') }}" class="nav-link">
+            <a href="/planner" class="nav-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 Planner
             </a>
-            <a href="{{ url_for('brain_dump') }}" class="nav-link">
+            <a href="/brain_dump" class="nav-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
@@ -379,57 +370,116 @@
         </button>
     </nav>
 
-    <section class="hero">
-        <h1>AI LIFE & BUDGET PLANNER</h1>
-        <p>CREATE YOUR PERFECT LIFE BALANCE WITH AI-POWERED PLANNING</p>
-        <a href="/planner" class="cta-button">
-            START PLANNING NOW
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-        </a>
-    </section>
-
-    <section class="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>SMART BUDGETING</h3>
-                <p>AI-POWERED FINANCIAL PLANNING THAT ADAPTS TO YOUR INCOME AND EXPENSES</p>
-            </div>
-            <div class="feature-card">
-                <h3>FITNESS GOALS</h3>
-                <p>PERSONALIZED WORKOUT PLANS BASED ON YOUR EXPERIENCE AND EQUIPMENT</p>
-            </div>
-            <div class="feature-card">
-                <h3>LIFE BALANCE</h3>
-                <p>INTELLIGENT SCHEDULING THAT BALANCES WORK, FITNESS, AND PERSONAL TIME</p>
-            </div>
+    <div class="container">
+        <div class="header">
+            <h1>BRAIN DUMP</h1>
+            <p>GET YOUR THOUGHTS OUT AND LET AI ORGANIZE THEM INTO A STRUCTURED PLAN</p>
         </div>
-    </section>
 
-    <section class="how-it-works">
-        <h2>HOW IT WORKS</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>ENTER YOUR INFORMATION</h3>
-                <p>PROVIDE YOUR FINANCIAL DETAILS, FITNESS GOALS, AND PREFERENCES</p>
+        <form id="brainDumpForm">
+            <div class="form-section">
+                <h2>YOUR THOUGHTS</h2>
+                <div class="input-group">
+                    <label for="brainDump">WRITE DOWN YOUR THOUGHTS, IDEAS, AND GOALS</label>
+                    <textarea id="brainDump" rows="10" placeholder="JUST START WRITING... DON'T WORRY ABOUT FORMATTING OR ORGANIZATION. LET YOUR MIND FLOW FREELY." required></textarea>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>AI ANALYSIS</h3>
-                <p>OUR AI ANALYZES YOUR DATA TO CREATE A PERSONALIZED PLAN</p>
+
+            <div class="form-section">
+                <h2>TIMELINE</h2>
+                <div class="input-group">
+                    <label for="startDate">START DATE</label>
+                    <input type="date" id="startDate" required>
+                </div>
+                <div class="input-group">
+                    <label for="endDate">END DATE</label>
+                    <input type="date" id="endDate" required>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>GET YOUR CALENDAR</h3>
-                <p>RECEIVE A COMPLETE CALENDAR WITH YOUR PERSONALIZED PLAN</p>
+
+            <div class="submit-section">
+                <button type="submit" id="submitBtn" class="submit-btn">GENERATE PLAN</button>
+                <div id="errorMessage" class="error-message"></div>
+                <div id="statusMessage" class="status-message"></div>
             </div>
-        </div>
-    </section>
+        </form>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('brainDumpForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').min = today;
+            document.getElementById('endDate').min = today;
+
+            // Function to update status message
+            function updateStatus(message, isError = false) {
+                statusMessage.textContent = message;
+                statusMessage.classList.add('visible');
+                if (isError) {
+                    statusMessage.classList.add('error');
+                } else {
+                    statusMessage.classList.remove('error');
+                }
+            }
+
+            // Function to show error message
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.add('visible');
+                updateStatus(message, true);
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                errorMessage.classList.remove('visible');
+                statusMessage.classList.remove('visible');
+                submitBtn.disabled = true;
+                submitBtn.classList.add('loading');
+
+                const formData = {
+                    content: document.getElementById('brainDump').value,
+                    start_date: document.getElementById('startDate').value,
+                    end_date: document.getElementById('endDate').value
+                };
+
+                try {
+                    const response = await fetch('/api/process_brain_dump', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.error || `Network response was not ok: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        updateStatus('Your brain dump has been processed successfully!');
+                        // Redirect to planner page after successful processing
+                        setTimeout(() => {
+                            window.location.href = '/planner';
+                        }, 2000);
+                    } else {
+                        showError('Error processing brain dump: ' + (data.error || 'Unknown error'));
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showError(error.message || 'Error processing brain dump. Please try again.');
+                }
+            });
+
+            // Theme toggle functionality
             const themeToggle = document.getElementById('themeToggle');
             const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
             
